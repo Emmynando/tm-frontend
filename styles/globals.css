@@ -1,107 +1,136 @@
-:root {
-  --max-width: 1100px;
-  --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Libre+Baskerville&display=swap");
 
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-
-  --primary-glow: conic-gradient(
-    from 180deg at 50% 50%,
-    #16abff33 0deg,
-    #0885ff33 55deg,
-    #54d6ff33 120deg,
-    #0071ff33 160deg,
-    transparent 360deg
-  );
-  --secondary-glow: radial-gradient(
-    rgba(255, 255, 255, 1),
-    rgba(255, 255, 255, 0)
-  );
-
-  --tile-start-rgb: 239, 245, 249;
-  --tile-end-rgb: 228, 232, 233;
-  --tile-border: conic-gradient(
-    #00000080,
-    #00000040,
-    #00000030,
-    #00000020,
-    #00000010,
-    #00000010,
-    #00000080
-  );
-
-  --callout-rgb: 238, 240, 241;
-  --callout-border-rgb: 172, 175, 176;
-  --card-rgb: 180, 185, 188;
-  --card-border-rgb: 131, 134, 135;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(
-      to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
-    );
-
-    --tile-start-rgb: 2, 13, 46;
-    --tile-end-rgb: 2, 5, 19;
-    --tile-border: conic-gradient(
-      #ffffff80,
-      #ffffff40,
-      #ffffff30,
-      #ffffff20,
-      #ffffff10,
-      #ffffff10,
-      #ffffff80
-    );
-
-    --callout-rgb: 20, 20, 20;
-    --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
-    --card-border-rgb: 200, 200, 200;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  background-color: #eee;
+  height: 100%;
+  margin: auto;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+li {
+  font-weight: bold;
+  font-family: "Cormorant Garamond", serif;
+  list-style-type: none;
 }
+
+form {
+  margin: 0 auto;
+}
+
+form p {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+form input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid var(--sec-color);
+  caret-color: orangered;
+  font-family: var(--sec-text);
+  margin-bottom: 1em;
+  outline: none;
+  width: 20rem;
+  padding: 0.3rem;
+  letter-spacing: 2px;
+}
+
+form input:last-child {
+  margin-bottom: 0.5em;
+  width: 1rem;
+  padding: 0;
+}
+form img {
+  display: inline-block;
+  position: relative;
+  bottom: -10px;
+}
+
+[placeholder]:focus::-webkit-input-placeholder {
+  transition: text-indent 0.3s 0.3s ease;
+  text-indent: -100%;
+  opacity: 1;
+}
+
+form input:focus {
+  outline: transparent;
+}
+
+form button {
+  color: #fff;
+  background-color: #505050;
+  border-radius: 5px;
+  border-color: transparent;
+  width: 21.5rem;
+}
+
+/* .active {
+  border-bottom: 2px solid #df9c51;
+} */
+:root {
+  --pri-clr: rgb(252, 223, 177);
+  --sec-color: rgb(15, 15, 68);
+  /* --btn-clr: #c58640; */
+  --pri-text: "Libre Baskerville", serif;
+  --sec-text: "Cormorant Garamond", serif;
+}
+
+/* @media (width <= 660px) {
+  form input,
+  textarea {
+    margin-bottom: 0.5rem;
+    width: 18rem;
+    padding: 0.3rem;
+  } */
+/* } */
