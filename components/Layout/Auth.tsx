@@ -22,11 +22,15 @@ export default function Auth() {
     setIsLogIn((prevState) => !prevState);
   };
 
+  // function for sendinf login information
   function submitHandler(e: any) {
     e.preventDefault();
     const data = { mail, password };
+    // if user is logging in
     if (isLogin) {
       console.log(data);
+    } else {
+      // user is signing up
     }
     setMail("");
     setPassword("");
