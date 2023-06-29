@@ -23,7 +23,7 @@ export default function Auth() {
   };
 
   // function for sendinf login information
-  function submitHandler(e: any) {
+  async function submitHandler(e: any) {
     e.preventDefault();
     const data = { mail, password };
     // if user is logging in
