@@ -6,14 +6,16 @@ import user from "@components/components/images/user.svg";
 import padlock from "@components/components/images/password.svg";
 import blackbg from "@components/components/images/darkbg.jpg";
 import tms from "@components/components/images/tms-image.jpg";
+
+import { useAuthCtx } from "@components/store/AuthContext";
 import styles from "./Auth.module.css";
-import jwt from "jsonwebtoken";
 
 export default function Auth() {
   const router = useRouter();
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogIn] = useState(true);
+  const { token, setIsToken } = useAuthCtx();
 
   const { signup: any } = router.query;
 
@@ -59,10 +61,7 @@ export default function Auth() {
 
           // getting the token
           const resData = await datum.json();
-          // const token = resData.token;
-          const token = jwt.sign({ mail }, resData.token, {
-            expiresIn: 60 * 24 * 7,
-          });
+          setIsToken(resData.token);
         }
       }
     } catch (error) {

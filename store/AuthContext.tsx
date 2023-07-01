@@ -1,42 +1,31 @@
-import React, { useState } from "react";
+"use client";
 
-type Props = {
-  children: string | JSX.Element | JSX.Element[] | (() => JSX.Element);
-};
+import React, {
+  useState,
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+} from "react";
 
-const AuthCtx = React.createContext({
+interface ContextProps {
+  token: string;
+  setIsToken: Dispatch<SetStateAction<string>>;
+}
+
+const AuthCtx = createContext<ContextProps>({
   token: "",
-  isLoggedIn: false,
-  logOut: () => {},
-  logIn: (token: string) => {},
+  setIsToken: (): string => "",
 });
 
-export const AuthContextProvider = ({ children }: Props) => {
-  const initialToken = JSON.parse(document.cookie)["token"];
-  const [isToken, setIstoken] = useState(initialToken);
-
-  const userLoggedIn = !!isToken;
-
-  const logInHandler = (token: string) => {
-    setIstoken(token);
-    localStorage.setItem("token", token);
-  };
-
-  const logOutHandler = () => {
-    setIstoken(null);
-    localStorage.removeItem("token");
-  };
-
-  const contextValue = {
-    token: isToken,
-    isLoggedIn: userLoggedIn,
-    logOut: logOutHandler,
-    logIn: logInHandler,
-  };
+export const AuthContextProvider = ({ children }) => {
+  const [token, setIsToken] = useState("");
 
   return (
-    <AuthCtx.Provider value:any={contextValue}>{children}</AuthCtx.Provider>
+    <AuthCtx.Provider value={{ token, setIsToken }}>
+      {children}
+    </AuthCtx.Provider>
   );
 };
 
-export default AuthCtx;
+export const useAuthCtx = () => useContext(AuthCtx);
