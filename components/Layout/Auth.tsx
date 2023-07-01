@@ -1,16 +1,23 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import user from "@components/components/images/user.svg";
 import padlock from "@components/components/images/password.svg";
 import blackbg from "@components/components/images/darkbg.jpg";
 import tms from "@components/components/images/tms-image.jpg";
+
+import { useAuthCtx } from "@components/store/AuthContext";
 import styles from "./Auth.module.css";
 
 export default function Auth() {
+  const router = useRouter();
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogIn] = useState(true);
+  const { token, setIsToken } = useAuthCtx();
+
+  const { signup: any } = router.query;
 
   const stylez = {
     backgroundImage: `url(${blackbg.src})`,
@@ -18,19 +25,47 @@ export default function Auth() {
     backgroundSize: "cover",
   };
 
+  // fnction switching between sign-up and log-in page
   const switchModeHandler = () => {
     setIsLogIn((prevState) => !prevState);
   };
 
-  // function for sendinf login information
-  function submitHandler(e: any) {
+  // function for sending login information
+  async function submitHandler(e: any) {
     e.preventDefault();
     const data = { mail, password };
-    // if user is logging in
-    if (isLogin) {
-      console.log(data);
-    } else {
-      // user is signing up
+    const PATH = "http://localhost:3000/auth";
+    try {
+      if (data) {
+        // if user is logging in
+        if (isLogin) {
+          const datum = await fetch(`${PATH}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+          // getting the token
+          const resData = await datum.json();
+          const token = resData.token;
+        } else {
+          // user is signing up
+          const datum = await fetch(`${PATH}?signup`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          // getting the token
+          const resData = await datum.json();
+          setIsToken(resData.token);
+        }
+      }
+    } catch (error) {
+      alert("An error Occured");
     }
     setMail("");
     setPassword("");
@@ -77,17 +112,25 @@ export default function Auth() {
           {isLogin && (
             <p className={styles.p}>
               Don't Have an account?
-              <button className={styles.button} onClick={switchModeHandler}>
+              <Link
+                href="/auth?signup"
+                className={styles.button}
+                onClick={switchModeHandler}
+              >
                 Sign Up
-              </button>
+              </Link>
             </p>
           )}
           {!isLogin && (
             <p className={styles.p}>
-              Already Have an Account?
-              <button className={styles.button} onClick={switchModeHandler}>
+              Already Have an Account?{"   "}
+              <Link
+                href="/auth"
+                className={styles.button}
+                onClick={switchModeHandler}
+              >
                 Log in
-              </button>
+              </Link>
             </p>
           )}
         </div>
